@@ -1,43 +1,46 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { FiltersWrapper, Orderings, CurrencyFilters, CurrencyButton } from '../styles/ComponentStyles';
+import { FiltersWrapper, Orderings, CurrencyFilters, CurrencyButton, CountIndicator } from '../styles/ComponentStyles';
+import { SORTING, FILTER } from '../utils/constants';
 
-export default function CurrencyFilter({
-}) {
+export default function CurrencyFilter({setSorting, setFilter, filter, allSpendings}) {
+
+  const handleSorting = (event) => {
+    setSorting(event.target.value)
+  }
+
+  const handleFilter = (filt) => {
+    setFilter(filt)
+  }
+
+  const getFilteredCount = (curr) => curr === FILTER.ALL 
+    ? allSpendings.length 
+    : allSpendings.filter(e => e.currency === curr).length
 
   return (
     <>
       <FiltersWrapper>
         <Orderings>
-          <select>
-            <option value='-date'>Sort by Date descending (default)</option>
-            <option value='date'>Sort by Date ascending</option>
-            <option value='-amount_in_huf'>Sort by Amount descending</option>
-            <option value='amount_in_huf'>Sort by Amount ascending</option>
+          <select onChange={handleSorting}>
+            <option value={SORTING.DESC_DATE}>Sort by Date descending (default)</option>
+            <option value={SORTING.ASC_DATE}>Sort by Date ascending</option>
+            <option value={SORTING.DESC_AMOUNT}>Sort by Amount descending</option>
+            <option value={SORTING.ASC_AMOUNT}>Sort by Amount ascending</option>
           </select>
         </Orderings>
         <CurrencyFilters>
-          <li>
+          {Object.keys(FILTER).map(key => 
+          <li key={key}>
             <CurrencyButton
-              name=''
+              currencyFilter={filter}
+              name={FILTER[key]}
+              onClick={() => handleFilter(FILTER[key])}
             >
-              ALL
+              {FILTER[key]}
+            <CountIndicator>{getFilteredCount(FILTER[key])} items</CountIndicator>
             </CurrencyButton>
           </li>
-          <li>
-            <CurrencyButton
-              name='HUF'
-            >
-              HUF
-            </CurrencyButton>
-          </li>
-          <li>
-            <CurrencyButton
-              name='USD'
-            >
-              USD
-            </CurrencyButton>
-          </li>
+          )}
         </CurrencyFilters>
       </FiltersWrapper>
     </>

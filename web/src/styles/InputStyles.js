@@ -20,6 +20,10 @@ export const InputStyles = styled.input`
     flex: 1;
   }
 
+  &::placeholder {
+    color: #AAAAAA;
+  }
+
   &[type='number'] {
     width: 150px;
   }

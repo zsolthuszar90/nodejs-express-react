@@ -1,23 +1,54 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { InputStyles } from '../styles/InputStyles';
 import { SelectStyles } from '../styles/SelectStyles';
-import { FormStyles } from '../styles/ComponentStyles';
+import { ErrorValidation, FormStyles } from '../styles/ComponentStyles';
+import { useFetch } from '../hooks/useFetch';
+import { BASE_URL, FETCH_STATUS } from '../utils/constants';
 
-export default function Form() {
-  const [state, setState] = useState({
+export default function Form({setSpendings}) {
+  const { data, status, error, fetchFn, resetErrors } = useFetch()
+
+  const isError = status === FETCH_STATUS.ERROR
+
+  const [newEntry, setNewEntry] = useState({
     description: '',
     amount: 0,
     currency: 'USD',
   });
 
-  function handleChange(e) {
+  useEffect(() => {
+    setSpendings(data)
+  }, [data])
+
+  const handleChange = (e) => {
     const { name, value } = e.target;
 
-    setState({
-      ...state,
+    setNewEntry({
+      ...newEntry,
       [name]: value,
     });
+
+    resetErrors()
   }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+    fetchFn(BASE_URL, { 
+      method: 'POST', 
+      body: JSON.stringify(newEntry),  
+      headers: { 
+        "Content-Type": "application/json"
+      }
+    })
+
+    setNewEntry({
+      ...newEntry,
+      amount: 0,
+      description: ''
+    })
+  }
+
 
   return (
     <>
@@ -26,25 +57,26 @@ export default function Form() {
           type='text'
           placeholder='description'
           name='description'
-          value={state.description}
+          value={newEntry.description}
           onChange={handleChange}
         />
         <InputStyles
           type='number'
           placeholder='amount'
           name='amount'
-          value={state.amount}
+          value={newEntry.amount || ''}
           onChange={handleChange}
         />
         <SelectStyles
           name='currency'
-          value={state.currency}
+          value={newEntry.currency}
           onChange={handleChange}
         >
           <option value='HUF'>HUF</option>
           <option value='USD'>USD</option>
         </SelectStyles>
-        <InputStyles type='submit' value='Save' />
+        <InputStyles type='submit' value='Save' onClick={handleSubmit}/>
+      {isError && <div>{error.map(e => <ErrorValidation key={e}>{e}</ErrorValidation>)}</div>}
       </FormStyles>
     </>
   );

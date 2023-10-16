@@ -22,6 +22,7 @@ export const CurrencyFilters = styled.ul`
 `;
 
 export const CurrencyButton = styled.button`
+  position: relative;
   border: none;
   font-family: var(--font-family);
   font-size: 20px;
@@ -200,6 +201,18 @@ export const IconWrapper = styled.div`
   }
 `;
 
+export const DeletingWrapper = styled.div`
+  padding: 20px;
+  line-height: 0;
+  border-radius: 12px;
+  cursor: pointer;
+
+  @media (max-width: 756px) {
+    padding: 20px;
+    margin: 0;
+  }
+`;
+
 export const TextWrapper = styled.div`
   @media (max-width: 756px) {
     text-align: center;
@@ -236,3 +249,24 @@ export const ErrorMessage = styled.h1`
   border-radius: 8px;
   max-width: 80%;
 `;
+
+export const ErrorValidation = styled.h1`
+  text-align: left;
+  margin: 0;
+  font-size: 12px;
+  font-weight: normal;
+  color: red;
+`;
+
+export const CountIndicator = styled.div`
+  text-align: center;
+  background-color: white;
+  border-radius: 5px;
+  position: absolute;
+  font-size: 8px;
+  bottom: -15px;
+  right: 0;
+  left: 0;
+  padding: 2px;
+  min-width: 20px;
+`
