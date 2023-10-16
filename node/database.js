@@ -1,9 +1,7 @@
 import mysql from 'mysql'
+import 'dotenv/config'
 
-// public for the review
-const accessURL = `mysql://vcos79rasg93nqggzwe7:pscale_pw_RADEpP14ewAuYbwKxIhmlLGjCIXewN8elZMGMyyqo1G@aws.connect.psdb.cloud/polygence-db?ssl={"rejectUnauthorized":true}`
-
-const connection = mysql.createConnection(accessURL)
+const connection = mysql.createConnection(process.env.DATABASE_URL)
 
 export const db = {
   connect: () => connection.connect(),
