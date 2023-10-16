@@ -1,7 +1,7 @@
 import mysql from 'mysql'
 
 // public for the review
-const accessURL = `mysql://lc9dm5yj26dvxm9i2f7i:pscale_pw_KvRZpOxiy7ushFajeSLTdcp5NahLJmQKBrUopiZBzaU@aws.connect.psdb.cloud/polygence-db?ssl={"rejectUnauthorized":true}`
+const accessURL = `mysql://vcos79rasg93nqggzwe7:pscale_pw_RADEpP14ewAuYbwKxIhmlLGjCIXewN8elZMGMyyqo1G@aws.connect.psdb.cloud/polygence-db?ssl={"rejectUnauthorized":true}`
 
 const connection = mysql.createConnection(accessURL)
 
