@@ -32,7 +32,8 @@ For the sake of this interview task I completed the requirements, but there are 
 - Adding typescript
 - Adding authentication, so users can have individual spendings
 - New endpoints, e.g. editing existing spendings
-- Optimistic frontend fetching to skip the loading circle
+- Optimistic frontend fetching to skip the loading circle view
+- Adding query parameters to the URL to trigger the sorting mode and filter values by extarnal URLs
 - Higher test coverage
 - Frontend input validation to save unneccessary backend calls
 - Disabling save button until input fields are filled
